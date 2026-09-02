@@ -12,7 +12,7 @@
 [![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white)](https://github.com/features/actions)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-End-to-end automated CI/CD pipeline for a **FastAPI** application containerized with **Docker**, deployed on a **Debian (VMware)** virtual infrastructure via a **GitHub Self-Hosted Runner**.
+An automated CI/CD pipeline for a **FastAPI** application containerized with **Docker**, deployed on a **Debian (VMware)** virtual infrastructure via a **GitHub Self-Hosted Runner**.
 
 [Features](#-features) •
 [Architecture](#-architecture) •
