@@ -1,7 +1,7 @@
 <div align="center">
 
 # 🚀 FastAPI CI/CD Pipeline
-### Infrastructure Self-Hosted Locale
+### Self-Hosted Local Infrastructure
 
 [![CI/CD Pipeline](https://github.com/AvotraAder/DevOps-Project-1/actions/workflows/deploy.yml/badge.svg)](https://github.com/AvotraAder/DevOps-Project-1/actions)
 
@@ -12,25 +12,25 @@
 [![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white)](https://github.com/features/actions)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-Pipeline CI/CD automatisé de bout en bout pour une application **FastAPI** containerisée avec **Docker**, déployée sur une infrastructure virtuelle **Debian (VMware)** via un **GitHub Self-Hosted Runner**.
+End-to-end automated CI/CD pipeline for a **FastAPI** application containerized with **Docker**, deployed on a **Debian (VMware)** virtual infrastructure via a **GitHub Self-Hosted Runner**.
 
-[Fonctionnalités](#-fonctionnalités) •
+[Features](#-features) •
 [Architecture](#-architecture) •
 [Installation](#-installation) •
-[Utilisation](#-utilisation) •
-[Auteur](#-auteur)
+[Usage](#-usage) •
+[Author](#-author)
 
 </div>
 
 ---
 
-## ✨ Fonctionnalités
+## ✨ Features
 
-- ⚡ **Déploiement automatique** à chaque `push` sur `main`
-- 🧪 **Tests unitaires** exécutés automatiquement avec Pytest
-- 🐳 **Containerisation Docker** avec redémarrage automatique
-- 🏠 **Infrastructure 100% self-hosted**, aucun coût cloud
-- 📖 **Documentation Swagger** générée automatiquement par FastAPI
+- ⚡ **Automatic deployment** on every `push` to `main`
+- 🧪 **Unit tests** automatically executed with Pytest
+- 🐳 **Docker containerization** with automatic restart
+- 🏠 **100% self-hosted infrastructure**, zero cloud costs
+- 📖 **Auto-generated Swagger documentation** by FastAPI
 
 ---
 
@@ -52,40 +52,39 @@ flowchart LR
     style G fill:#2ECC71,color:#fff
 ```
 
-### Fonctionnement du pipeline
+### Pipeline Workflow
 
-| Étape | Environnement | Actions |
+| Step | Environment | Actions |
 |---|---|---|
-| **1. Test** | ☁️ GitHub Cloud | Checkout du code → Setup Python 3.11 → Install dépendances → `pytest` |
-| **2. Deploy** | 🖥️ VM Debian (self-hosted) | `docker build` → stop/remove ancien conteneur → run nouveau conteneur (`--restart always`) |
+| **1. Test** | ☁️ GitHub Cloud | Code checkout → Setup Python 3.11 → Install dependencies → `pytest` |
+| **2. Deploy** | 🖥️ Debian VM (self-hosted) | `docker build` → stop/remove old container → run new container (`--restart always`) |
 
 ---
 
-## 🛠 Stack Technique
+## 🛠 Tech Stack
 
-| Composant | Technologie |
+| Component | Technology |
 |---|---|
-| Framework API | Python 3.11 · FastAPI |
-| Conteneurisation | Docker |
-| Orchestration CI/CD | GitHub Actions |
-| Environnement de déploiement | Debian 12 (VMware, réseau NAT) |
-| Agent de déploiement | GitHub Self-Hosted Runner (service systemd) |
+| API Framework | Python 3.11 · FastAPI |
+| Containerization | Docker |
+| CI/CD Orchestration | GitHub Actions |
+| Deployment Environment | Debian 12 (VMware, NAT network) |
+| Deployment Agent | GitHub Self-Hosted Runner (systemd service) |
 
 ---
 
-## 📁 Structure du dépôt
+## 📁 Repository Structure
 
 ```
 DevOps-Project-1/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml      # Pipeline CI/CD automatisé
+│       └── deploy.yml      # Automated CI/CD pipeline
 ├── src/
-│   ├── main.py              # Code de l'application FastAPI
-│   ├── requirements.txt     # Dépendances Python
-│   └── test_main.py         # Tests unitaires Pytest
-├── Dockerfile                # Instructions de build de l'image Docker
-├── .gitignore
+│   ├── app.py              # FastAPI application code
+│   ├── requirements.txt     # Python dependencies
+│   └── test_app.py         # Pytest unit tests
+├── Dockerfile                # Docker image build instructions
 └── README.md
 ```
 
@@ -93,13 +92,13 @@ DevOps-Project-1/
 
 ## 🚀 Installation
 
-### Prérequis
+### Prerequisites
 
-- Une VM Debian 12 (VMware, réseau NAT ou bridge)
-- Accès administrateur (`sudo`) sur la VM
-- Un dépôt GitHub avec les droits de configuration des Runners
+- Debian 12 VM (VMware, NAT or bridge network)
+- Administrator access (`sudo`) on the VM
+- GitHub repository with runner configuration rights
 
-### 1. Installer Docker sur la VM
+### 1. Install Docker on the VM
 
 ```bash
 sudo apt update && sudo apt install -y docker.io
@@ -107,63 +106,117 @@ sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-### 2. Installer le Runner GitHub
+### 2. Install GitHub Runner
 
 ```bash
 mkdir ~/actions-runner && cd ~/actions-runner
 
-# Configurer via les commandes fournies dans
+# Configure using commands provided in
 # Settings > Actions > Runners > New self-hosted runner
-./config.sh --url https://github.com/AvotraAder/DevOps-Project-1 --token <TON_TOKEN>
+./config.sh --url https://github.com/AvotraAder/DevOps-Project-1 --token <YOUR_TOKEN>
 
-# Installer et démarrer le service systemd
+# Install and start the systemd service
 sudo ./svc.sh install
 sudo ./svc.sh start
 ```
 
-> 💡 Le Runner tourne désormais en arrière-plan et écoute les jobs déclenchés par GitHub Actions.
+> 💡 The runner now runs in the background and listens for jobs triggered by GitHub Actions.
 
 ---
 
-## 🧪 Utilisation
+## 🧪 Usage
 
-Une fois le pipeline exécuté avec succès :
+Once the pipeline has executed successfully:
 
-**1. Récupérer l'adresse IP de la VM**
+**1. Get the VM's IP address**
 
 ```bash
 hostname -I
 ```
 
-**2. Accéder à l'application**
+**2. Access the application**
 
-| Ressource | URL |
+| Resource | URL |
 |---|---|
-| 🌐 Endpoint principal | `http://<IP_DE_TA_VM>:8000/` |
-| 📖 Documentation Swagger | `http://<IP_DE_TA_VM>:8000/docs` |
-| 📘 Documentation ReDoc | `http://<IP_DE_TA_VM>:8000/redoc` |
+| 🌐 Main endpoint | `http://<YOUR_VM_IP>:8000/` |
+| 📖 Swagger documentation | `http://<YOUR_VM_IP>:8000/docs` |
+| 📘 ReDoc documentation | `http://<YOUR_VM_IP>:8000/redoc` |
+
+---
+
+## 🔧 Pipeline Configuration
+
+The `.github/workflows/deploy.yml` file runs automatically on every `push` to the `main` branch:
+
+**Job 1: `test` (GitHub Cloud)**
+- Retrieves code
+- Installs Python 3.11 and dependencies
+- Runs unit tests with `pytest`
+
+**Job 2: `deploy` (Self-Hosted Debian VM)**
+- Local runner intercepts the task
+- Builds (`docker build`) the new Docker image
+- Stops and removes old container if it exists
+- Launches new container with automatic restart (`--restart always`)
 
 ---
 
 ## 🗺 Roadmap
 
-- [ ] Ajouter un reverse proxy (Nginx / Traefik) + HTTPS
-- [ ] Notifications Slack/Discord en cas d'échec de déploiement
-- [ ] Monitoring avec Prometheus + Grafana
-- [ ] Tests d'intégration en plus des tests unitaires
+- [ ] Add reverse proxy (Nginx / Traefik) + HTTPS
+- [ ] Slack/Discord notifications on deployment failure
+- [ ] Monitoring with Prometheus + Grafana
+- [ ] Integration tests in addition to unit tests
+- [ ] Multi-stage Docker builds for optimization
 
 ---
 
-## 👤 Auteur
+## 🔍 Troubleshooting
+
+**Runner is not showing up in GitHub Actions**
+```bash
+# Check runner status
+cd ~/actions-runner && ./run.sh
+```
+
+**Docker permission denied error**
+```bash
+sudo usermod -aG docker $USER
+newgrp docker
+# Restart the runner
+sudo systemctl restart actions.runner
+```
+
+**Application not accessible from host machine**
+```bash
+# Verify container is running
+docker ps
+
+# Check VM network configuration
+hostname -I
+```
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👤 Author
 
 **Avotra Ader**
 
 [![GitHub](https://img.shields.io/badge/GitHub-DevOps--Project--1-181717?style=flat-square&logo=github)](https://github.com/AvotraAder/DevOps-Project-1)
+[![Twitter](https://img.shields.io/badge/Twitter-@AvotraAder-1DA1F2?style=flat-square&logo=twitter&logoColor=white)](https://twitter.com)
 
 ---
 
 <div align="center">
 
-Si ce projet vous a été utile, n'hésitez pas à lui laisser une ⭐ !
+If this project helped you, consider giving it a ⭐!
+
+[⬆ Back to top](#-fastapi-cicd-pipeline)
 
 </div>
