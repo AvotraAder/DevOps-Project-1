@@ -160,17 +160,6 @@ The `.github/workflows/deploy.yml` file runs automatically on every `push` to th
 - Launches new container with automatic restart (`--restart always`)
 
 ---
-
-## 🗺 Roadmap
-
-- [ ] Add reverse proxy (Nginx / Traefik) + HTTPS
-- [ ] Slack/Discord notifications on deployment failure
-- [ ] Monitoring with Prometheus + Grafana
-- [ ] Integration tests in addition to unit tests
-- [ ] Multi-stage Docker builds for optimization
-
----
-
 ## 🔍 Troubleshooting
 
 **Runner is not showing up in GitHub Actions**
