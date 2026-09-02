@@ -43,7 +43,7 @@ async def read_root():
             .status {{
                 display: inline-block;
                 padding: 10px 20px;
-                background-color: #238636;
+                background-color: #50b4e6;
                 color: white;
                 border-radius: 30px;
                 font-weight: bold;
