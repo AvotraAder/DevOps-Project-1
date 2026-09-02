@@ -6,7 +6,7 @@ app = FastAPI()
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
-    # On récupère l'heure actuelle du serveur pour prouver que c'est dynamique
+
     heure_actuelle = datetime.now().strftime("%H:%M:%S - %d/%m/%Y")
     
     html_content = f"""
@@ -98,7 +98,7 @@ async def read_root():
     """
     return HTMLResponse(content=html_content, status_code=200)
 
-# On garde un endpoint JSON classique pour montrer que c'est bien une API
+
 @app.get("/api/status")
 async def get_status():
     return {"status": "online", "message": "L'API est prête à recevoir des requêtes JSON !"}
