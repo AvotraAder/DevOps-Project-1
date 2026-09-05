@@ -78,8 +78,7 @@ async def read_root():
     <body>
         <div class="container">
             <h1>🚀 Déploiement Réussi !</h1>
-            <p>Bienvenue sur ton application propulsée par ton infrastructure locale.</p>
-            
+ 
             <div class="status">✅ Pipeline CI/CD 100% Opérationnel</div>
             
             <div class="tech-stack">
